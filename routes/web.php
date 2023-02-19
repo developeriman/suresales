@@ -21,6 +21,10 @@ Route::get('/cache-clear', function () {
     return 'Cache is cleared';
 });
 
+Route::get('/download-page',function(){
+    return view('download'); 
+});
+
 Route::get('test',function(){
 
     return view('admin.generatecode.test'); 
