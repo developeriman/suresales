@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('templates', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->json('schema');            
+            $table->json('template');            
             $table->timestamps();
         });
 
