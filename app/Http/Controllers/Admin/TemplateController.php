@@ -16,6 +16,6 @@ class TemplateController extends Controller
     function store(Request $request)
     {
         $data = $request->all();
-        return Templates::create(['template' => $data['template'], 'name' => $data['name']]);
+        return Templates::create(['template' => json_encode($data['data']), 'name' => $data['name']]);
     }
 }

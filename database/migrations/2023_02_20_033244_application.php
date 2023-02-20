@@ -16,22 +16,32 @@ return new class extends Migration
         Schema::create('templates', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->json('template');            
+            $table->json('template');
             $table->timestamps();
         });
 
         Schema::create('codes', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('code');            
-            $table->string('status');            
+            $table->string('template_id');
+            $table->string('code');
+            $table->string('status');
             $table->timestamps();
         });
 
         Schema::create('upload_files', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->json('data');            
+            $table->json('data');
+            $table->timestamps();
+        });
+
+        Schema::create('admin', function (Blueprint $table) {
+            $table->id();
+            $table->string('username');
+            $table->string('email')->unique();
+            $table->string('password');
+            $table->integer('status');
+            $table->string('role');
             $table->timestamps();
         });
     }

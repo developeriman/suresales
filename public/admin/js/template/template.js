@@ -21,7 +21,7 @@ $(document).ready(function() {
     $('#savetemplate').click(function() {
         var _token = $('input[name="_token"]').val();
         const data = bindTemplate();
-        $.post('./templatesave', {data,'_token':_token}, function (data) {
+        $.post('./templatesave', {data,'_token':_token, name: 'Template 1'}, function (data) {
 
             console.log('data.....'+ data)
             slno = 0;
@@ -57,11 +57,11 @@ function bindTemplate()
 {
     const template = [];
     for(let i = 1; i <= slno; i++) {
-        var input = $(`#template-input-${i}`).val();
-        var type = $(`#template-input-type-${i}`).val();
+        let field = $(`#template-input-${i}`).val();
+        let type = $(`#template-input-type-${i}`).val();
 
         template.push({
-            input,
+            field,
             type
         })
     }
