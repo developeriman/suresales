@@ -3,13 +3,13 @@ var slno = 1;
 var checkfield = -1;
 $(document).ready(function() {
     $('#generatecode').click(function() {
-        var templatename = $('#templatename').val();
-        var prefix = $('#prefix').val();
-        var noofcodes = $('#noofcodes').val();
+        let template_id = $('#template_id').val();
+        let prefix = $('#prefix').val();
+        let num_of_digit = $('#num_of_digit').val();
 
-        var _token = $('input[name="_token"]').val();
+        let _token = $('input[name="_token"]').val();
 
-        $.post('./generatecode', {'templatename': templatename,'prefix':prefix,'noofcodes':noofcodes,'_token':_token}, function (data) {
+        $.post('./generatecode', {'template_id': template_id, 'prefix': prefix, 'num_of_digit': num_of_digit, '_token': _token}, function (data) {
 
            console.log('data.....'+ data)
 
@@ -22,11 +22,9 @@ $(document).ready(function() {
         var _token = $('input[name="_token"]').val();
         const data = bindTemplate();
         $.post('./templatesave', {data,'_token':_token, name: 'Template 1'}, function (data) {
-
-            console.log('data.....'+ data)
-            slno = 0;
+            console.log('data.....'+ data);
+            clearTemplate();
         });
-
     });
 
     $('#addrow').click(function() {
@@ -51,6 +49,15 @@ $(document).ready(function() {
 function removerow() {
     $(`#template-row-${slno}`).remove();
     slno--;
+}
+
+function clearTemplate() {
+    $(`#template-input-1`).val('');
+    $(`#template-input-type-1`).val('');
+    for(let i = 2; i <= slno; i++) {
+        $(`#template-row-${i}`).remove();
+    }
+    slno = 1;
 }
 
 function bindTemplate()

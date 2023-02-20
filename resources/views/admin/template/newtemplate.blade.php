@@ -75,7 +75,6 @@
             </div>
         </div>
 
-        </form>
 
     </div>
     <script type="text/javascript" src="{{ asset('admin/Asset/jquery/jquery.min.js') }}"></script>

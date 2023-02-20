@@ -9,6 +9,6 @@ class Codes extends Model
 {
     use HasFactory;
     protected $table = 'codes';
-    protected $fillable = ['name', 'code', 'status'];
+    protected $fillable = ['template_id', 'code', 'status'];
 
 }
