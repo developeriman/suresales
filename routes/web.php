@@ -1,13 +1,19 @@
 <?php
 
+
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FrontController;
+
+
+
+use App\Http\Controllers\LiveTableController;
 use App\Http\Controllers\Admin\LoginController;
+
 use App\Http\Controllers\Admin\TemplateController;
-
-
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\GenerateCodeController;
+
+
 Route::get('hash',function(){
      echo Hash::make(12345);
 });
@@ -25,12 +31,27 @@ Route::get('/download-page',function(){
     return view('download'); 
 });
 
+
+
+
 Route::get('test',function(){
 
     return view('admin.generatecode.test'); 
 });
 
 //----- Admin Routes -----//
+
+
+
+Route::get('/livetable',[LiveTableController::class,'index']);
+
+Route::get('/livetable/fetch_data',[LiveTableController::class,'fetch_data']);
+Route::GET('/livetable/add_data',[LiveTableController::class,'add_data'])->name('livetable.add_data');
+Route::GET('/livetable/update_data',[LiveTableController::class,'update_data'])->name('livetable.update_data');
+Route::GET('/livetable/delete_data',[LiveTableController::class,'delete_data'])->name('livetable.delete_data');
+
+
+
 
 Route::group(['prefix' => 'admin'], function(){
     Route::get('/pass',[LoginController::class,'pass']);
