@@ -41,8 +41,8 @@ Route::group(['prefix' => 'admin'], function(){
         Route::get('/dashboard',[DashboardController::class, 'index']);
           Route::get('/template',[TemplateController::class, 'index']);
           Route::get('/generate-code',[GenerateCodeController::class, 'index']);
-          Route::post('/templatesave',[TemplateController::class, 'templatesave']);
-          Route::post('/generatecode',[TemplateController::class, 'generatecode']);
+          Route::post('/templatesave',[TemplateController::class, 'store']);
+          Route::post('/generatecode',[GenerateCodeController::class, 'store']);
 
     });
    

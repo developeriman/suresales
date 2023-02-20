@@ -9,5 +9,6 @@ class Codes extends Model
 {
     use HasFactory;
     protected $table = 'codes';
+    protected $fillable = ['name', 'code', 'status'];
 
 }
