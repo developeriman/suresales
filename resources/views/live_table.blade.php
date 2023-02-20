@@ -23,7 +23,7 @@
          <th>Last Name</th>
          <th>Full Name</th>
          <th>Phone</th>
-         <th>File</th>
+ 
          <th>Delete</th>
         </tr>
        </thead>
@@ -58,8 +58,6 @@ $(document).ready(function(){
     html += '<td contenteditable id="last_name"></td>';
     html += '<td contenteditable id="full_name"></td>';
     html += '<td contenteditable id="phone"></td>';
-    html += '<td contenteditable id="file"></td>';
-
     html += '<td><button type="button" class="btn btn-success btn-xs" id="add">Add</button></td></tr>';
     for(var count=0; count < data.length; count++)
     {
@@ -69,7 +67,6 @@ $(document).ready(function(){
      html += '<td contenteditable class="column_name" data-column_name="last_name" data-id="'+data[count].id+'">'+data[count].last_name+'</td>';
      html += '<td contenteditable class="column_name" data-column_name="full_name" data-id="'+data[count].id+'">'+data[count].full_name+'</td>';
      html += '<td contenteditable class="column_name" data-column_name="phone" data-id="'+data[count].id+'">'+data[count].phone+'</td>';
-     html += '<td contenteditable class="column_name" data-column_name="file" data-id="'+data[count].id+'">'+data[count].file+'</td>';
 
      html += '<td><button type="button" class="btn btn-danger btn-xs delete" id="'+data[count].id+'">Delete</button></td></tr>';
     }
@@ -86,14 +83,13 @@ $(document).ready(function(){
   var last_name = $('#last_name').text();
   var full_name = $('#full_name').text();
   var phone = $('#phone').text();
-  var f = $('#file').file();
 
-  if(first_name != '' && last_name != '' && user_id != '' && full_name != '' && phone != '' && file != '')
+  if(first_name != '' && last_name != '' && user_id != '' && full_name != '' && phone != '')
   {
    $.ajax({
     url:"{{ route('livetable.add_data') }}",
     method:"GET",
-    data:{first_name:first_name, last_name:last_name,user_id:user_id ,full_name:full_name, phone:phone, file:file,_token:_token},
+    data:{first_name:first_name, last_name:last_name,user_id:user_id ,full_name:full_name, phone:phone,_token:_token},
     success:function(data)
     {
      $('#message').html(data);
@@ -110,7 +106,6 @@ $(document).ready(function(){
  $(document).on('blur', '.column_name', function(){
   var column_name = $(this).data("column_name");
   var column_value = $(this).text();
-  var column_value = $(this).file();
   var id = $(this).data("id");
   
   if(column_value != '')
