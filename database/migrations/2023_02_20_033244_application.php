@@ -30,6 +30,7 @@ return new class extends Migration
 
         Schema::create('upload_files', function (Blueprint $table) {
             $table->id();
+            $table->integer('user_id');
             $table->string('title');
             $table->json('data');
             $table->timestamps();

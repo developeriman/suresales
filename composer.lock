@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f24c20358606c38a78e9554dfba73460",
+    "content-hash": "e1fb2ce4fd0f35fe70480bb7e77b60c3",
     "packages": [
         {
             "name": "brian2694/laravel-toastr",
@@ -8751,7 +8751,8 @@
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
-        "php": "^8.0.2"
+        "php": "^8.0.2",
+        "ext-gd": "*"
     },
     "platform-dev": [],
     "plugin-api-version": "2.3.0"

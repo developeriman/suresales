@@ -17,7 +17,7 @@ class LiveTableController extends Controller
     {
         if($request->ajax())
         {
-            $data = DB::table('tbl_sample')->orderBy('id','desc')->get();
+            $data = DB::table('upload_data')->orderBy('id','desc')->get();
         
             echo json_encode($data);
         }
@@ -35,7 +35,7 @@ class LiveTableController extends Controller
                 'phone'     =>  $request->phone,
                
             );
-            $id = DB::table('tbl_sample')->insert($data);
+            $id = DB::table('upload_data')->insert($data);
             if($id > 0)
             {
                 echo '<div class="alert alert-success">Data Inserted</div>';
@@ -50,7 +50,7 @@ class LiveTableController extends Controller
             $data = array(
                 $request->column_name       =>  $request->column_value
             );
-            DB::table('tbl_sample')
+            DB::table('upload_data')
                 ->where('id', $request->id)
                 ->update($data);
             echo '<div class="alert alert-success">Data Updated</div>';
@@ -61,7 +61,7 @@ class LiveTableController extends Controller
     {
         if($request->ajax())
         {
-            DB::table('tbl_sample')
+            DB::table('upload_data')
                 ->where('id', $request->id)
                 ->delete();
             echo '<div class="alert alert-success">Data Deleted</div>';
