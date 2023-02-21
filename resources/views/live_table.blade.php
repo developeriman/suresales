@@ -6,6 +6,11 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script
+        type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.15.3/xlsx.full.min.js"
+    ></script>
+
 </head>
 
 <body>
@@ -30,23 +35,22 @@
                             </tr>
                         </thead>
                         <tbody>
+                        </tbody>
+
 
                     </table>
                     <hr style="border-top: 1.5px solid  rgb(127, 123, 123);">
-                    <form action="index.php" method="POST">
+                    <form method="POST">
                         {{ csrf_field() }}
                         <div class="custom-file" style="border: 2px solid red;width:30%;height:15%;padding:4px;border-radius: 2px;">
                             <label class="custom-file-label" for="inputGroupFile01"
                                 style="color:red">UPLOAD/XLSX/CSV</label>
 
-                            <input type="file" class="custom-file-input" id="inputGroupFile01">
-                            <input type="submit" value="UPLOAD" class="form-control">
+                            <input type="file" class="custom-file-input" id="fileInput">
+                            <button type="button" id="uploadFile" class="form-control">Upload</button>
 
                     </form>
                 </div>
-
-
-
 
             </div>
         </div>
@@ -56,51 +60,64 @@
 
 </html>
 
+
 <script>
+
+    var selectedFile;
+    document.getElementById("fileInput")
+        .addEventListener ("change", function (event) {
+            event.preventDefault();
+            selectedFile = event.target.files[0];
+        });
+    document
+        .getElementById("uploadFile")
+        .addEventListener("click", function() {
+            if (selectedFile) {
+                var fileReader = new FileReader( );
+                fileReader. onload = function (event) {
+                    var data = event.target.result;
+                    var workbook = XLSX.read( data, {
+                        type: "binary"
+                    });
+                    workbook. SheetNames. forEach ( sheet => {
+                        let rowobject = XLSX.utils.sheet_to_json(
+                            workbook.Sheets[sheet], {header: 1}
+                        );
+                        setTableData(rowobject);
+                    });
+                };
+                fileReader. readAsBinaryString(selectedFile);
+            }
+        });
+
+    function setTableData(data) {
+        let head = '<tr>';
+        for(const col of data[0]) {
+            head += `<td>${col}</td>`
+        }
+        head += `<td>Action</td>`
+        head += `</tr>`;
+        $('thead').html(head);
+
+        let body = '';
+        for (let count = 1; count < data.length; count++) {
+
+
+            body += '<tr>';
+            for(const col of data[count]) {
+                body += `<td contenteditable class="column_name" data-column_name="user_id" data-id="row-${count}">${col}</td>`;
+            }
+            body +=
+                '<td><button type="button" class="btn btn-danger btn-xs delete" id="abc">Delete</button></td>';
+            body += '</tr>';
+        }
+        $('tbody').html(body);
+    }
     $(document).ready(function() {
 
         fetch_data();
 
-        function fetch_data() {
-            $.ajax({
-                url: "/livetable/fetch_data",
-                dataType: "json",
-                success: function(data) {
-                    var html = '';
-                    html += '<tr>';
-                    html += '<td contenteditable id="user_id"></td>';
-                    html += '<td contenteditable id="first_name"></td>';
-                    html += '<td contenteditable id="last_name"></td>';
-                    html += '<td contenteditable id="full_name"></td>';
-                    html += '<td contenteditable id="phone"></td>';
-                    html +=
-                        '<td><button type="button" class="btn btn-success btn-xs" id="add">Add</button></td></tr>';
-                    for (var count = 0; count < data.length; count++) {
-                        html += '<tr>';
-                        html +=
-                            '<td contenteditable class="column_name" data-column_name="user_id" data-id="' +
-                            data[count].id + '">' + data[count].user_id + '</td>';
-                        html +=
-                            '<td contenteditable class="column_name" data-column_name="first_name" data-id="' +
-                            data[count].id + '">' + data[count].first_name + '</td>';
-                        html +=
-                            '<td contenteditable class="column_name" data-column_name="last_name" data-id="' +
-                            data[count].id + '">' + data[count].last_name + '</td>';
-                        html +=
-                            '<td contenteditable class="column_name" data-column_name="full_name" data-id="' +
-                            data[count].id + '">' + data[count].full_name + '</td>';
-                        html +=
-                            '<td contenteditable class="column_name" data-column_name="phone" data-id="' +
-                            data[count].id + '">' + data[count].phone + '</td>';
 
-                        html +=
-                            '<td><button type="button" class="btn btn-danger btn-xs delete" id="' +
-                            data[count].id + '">Delete</button></td></tr>';
-                    }
-                    $('tbody').html(html);
-                }
-            });
-        }
 
         var _token = $('input[name="_token"]').val();
 
