@@ -28,11 +28,11 @@ class LiveTableController extends Controller
         if($request->ajax())
         {
             $data = array(
-                'user_id'     =>  $request->user_id,
+                'user_id'       =>  $request->user_id,
                 'first_name'    =>  $request->first_name,
                 'last_name'     =>  $request->last_name,
                 'full_name'     =>  $request->full_name,
-                'phone'     =>  $request->phone,
+                'phone'         =>  $request->phone,
                
             );
             $id = DB::table('upload_data')->insert($data);
@@ -66,5 +66,9 @@ class LiveTableController extends Controller
                 ->delete();
             echo '<div class="alert alert-success">Data Deleted</div>';
         }
+    }
+
+    public function download(){
+        return view('admin.download');
     }
 }

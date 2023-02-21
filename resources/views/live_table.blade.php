@@ -26,13 +26,11 @@
                                 <th>Last Name</th>
                                 <th>Full Name</th>
                                 <th>Phone</th>
-
                                 <th>Delete</th>
                             </tr>
                         </thead>
                         <tbody>
 
-                        </tbody>
                     </table>
                     <hr style="border-top: 1.5px solid  rgb(127, 123, 123);">
                     <form action="index.php" method="POST">

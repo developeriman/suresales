@@ -14,7 +14,7 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\GenerateCodeController;
 
 
-Route::get('hash',function(){
+Route::get('pass',function(){
      echo Hash::make(12345);
 });
 Route::get('/cache-clear', function () {
@@ -43,13 +43,6 @@ Route::get('test',function(){
 
 
 
-Route::get('/livetable',[LiveTableController::class,'index']);
-
-Route::get('/livetable/fetch_data',[LiveTableController::class,'fetch_data']);
-Route::GET('/livetable/add_data',[LiveTableController::class,'add_data'])->name('livetable.add_data');
-Route::GET('/livetable/update_data',[LiveTableController::class,'update_data'])->name('livetable.update_data');
-Route::GET('/livetable/delete_data',[LiveTableController::class,'delete_data'])->name('livetable.delete_data');
-
 
 
 
@@ -60,10 +53,19 @@ Route::group(['prefix' => 'admin'], function(){
     Route::get('/logout',[LoginController::class,'adminLogout']);
     Route::group(['middleware' => ['admin_auth']],function(){
         Route::get('/dashboard',[DashboardController::class, 'index']);
-          Route::get('/template',[TemplateController::class, 'index']);
-          Route::get('/generate-code',[GenerateCodeController::class, 'index']);
-          Route::post('/templatesave',[TemplateController::class, 'store']);
-          Route::post('/generatecode',[GenerateCodeController::class, 'store']);
+        Route::get('/template',[TemplateController::class, 'index']);
+        Route::get('/generate-code',[GenerateCodeController::class, 'index']);
+        Route::post('/templatesave',[TemplateController::class, 'store']);
+        Route::post('/generatecode',[GenerateCodeController::class, 'store']);
+
+
+        Route::get('/livetable',[LiveTableController::class,'index']);
+        Route::get('/livetable/fetch_data',[LiveTableController::class,'fetch_data']);
+        Route::GET('/livetable/add_data',[LiveTableController::class,'add_data'])->name('livetable.add_data');
+        Route::GET('/livetable/update_data',[LiveTableController::class,'update_data'])->name('livetable.update_data');
+        Route::GET('/livetable/delete_data',[LiveTableController::class,'delete_data'])->name('livetable.delete_data');
+
+        Route::get('/download',[LiveTableController::class,'download']);
 
     });
    
