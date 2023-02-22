@@ -55,8 +55,6 @@
                                     <input type="file" class="form-control">
                                 </div>
                             </td>
-
-                        
                             <td>
                                 <div class="form-group">
                                     

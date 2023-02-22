@@ -37,11 +37,11 @@
             <input type="hidden" id="_token" name="_token" value="{{ csrf_token() }}">
             <table id="customers">
 
-                <tr>
+                {{-- <tr>
                     <td>Editable/typeable Dropdown</td>
                     <td>Input Text field</td>
                     <td>Input number field</td>
-                </tr>
+                </tr> --}}
 
                 <tr>
                     <td>
