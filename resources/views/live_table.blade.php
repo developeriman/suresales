@@ -41,7 +41,7 @@
 
 
                     </table>
-                    <button class="btn btn-primary">+ ADD</button>
+                    <button onclick="addNewRecord()" class="btn btn-primary">+ ADD</button>
                     <hr style="border-top: 1.5px solid  rgb(127, 123, 123);">
 
                     <form>
@@ -117,6 +117,15 @@
             }
         });
 
+    function addNewRecord() {
+        let body = '<tr>';
+        body += addNewRow(Array(xlsData[0].length).fill(''), xlsData.length);
+        body +=
+            '<td><button type="button" class="btn btn-danger btn-xs delete" id="abc">Delete</button></td>';
+        body += '</tr>';
+        $('tbody').append(body);
+    }
+
     function submitData() {
 
         let _token = $('input[name="_token"]').val();
@@ -142,9 +151,7 @@
     function setTableData() {
         let data = xlsData;
         let head = '<tr>';
-        for (const col of data[0]) {
-            head += `<td>${col}</td>`
-        }
+        head += addNewRow(data[0]);
         head += `<td>Action</td>`
         head += `</tr>`;
         $('thead').html(head);
@@ -152,15 +159,21 @@
         let body = '';
         for (let count = 1; count < data.length; count++) {
             body += '<tr>';
-            for (const col of data[count]) {
-                body +=
-                    `<td contenteditable class="column_name" data-column_name="user_id" data-id="row-${count}">${col}</td>`;
-            }
+            body += addNewRow(data[count], count);
             body +=
                 '<td><button type="button" class="btn btn-danger btn-xs delete" id="abc">Delete</button></td>';
             body += '</tr>';
         }
         $('tbody').html(body);
+    }
+
+    function addNewRow(data, numRow) {
+        let row = '';
+        for (const col of data) {
+            row +=
+                `<td contenteditable class="column_name" data-column_name="user_id" data-id="row-${numRow}">${col}</td>`;
+        }
+        return row;
     }
 
     $(document).ready(function() {
