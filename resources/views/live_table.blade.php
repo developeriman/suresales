@@ -24,7 +24,7 @@
                 <form style="text-align:center">
                     <div style="width:30%; margin: 0 auto;">
                         <div class="col-auto">
-                            <input type="text" class="form-control text-center" placeholder="TITLE *">
+                            <input type="text" class="form-control text-center" id="data_title" placeholder="TITLE *">
                         </div>
 
                     </div>
@@ -34,14 +34,7 @@
                 <div class="table-responsive">
                     <table class="table table-striped table-bordered">
                         <thead>
-                            <tr>
-                                <th>USER ID</th>
-                                <th>First Name</th>
-                                <th>Last Name</th>
-                                <th>Full Name</th>
-                                <th>Phone</th>
-                                <th>Delete</th>
-                            </tr>
+
                         </thead>
                         <tbody>
                         </tbody>
@@ -51,36 +44,34 @@
                     <button class="btn btn-primary">+ ADD</button>
                     <hr style="border-top: 1.5px solid  rgb(127, 123, 123);">
 
-                    <form method="POST">
+                    <form>
                         {{ csrf_field() }}
 
+                        <input type="hidden" name="code" id="template_code" value="{{ $code }}" />
 
                         <div style="width: 100%">
                             <div>
-
-
-
                                 <div class="divide-section">
 
                                     <div class="input-left">
-                                        <input style="opacity: 0; position: absolute;   z-index: -1; " id="inputTag"
-                                            type="file" />
+                                        <input style="opacity: 0; position: absolute;   z-index: -1; " id="inputTag" type="file" />
                                     </div>
 
                                     <div class="input-right" style="text-align:right">
-                                        <input type="button" class="btn btn-primary" value="SUBMIT">
+                                        <button type="button" onclick="submitData()" class="btn btn-primary" value="Submit">Submit</button>
                                     </div>
 
                                 </div>
-                                <label for="inputTag" style="color:red;text-align:center">
-                                    UPLOAD XLSX/CSV </label>
 
+                                <div class="custom-file" style="border: 2px solid red;width:30%;height:15%;padding:4px;border-radius: 2px;">
+                                    <label class="custom-file-label" for="inputGroupFile01"
+                                           style="color:red">UPLOAD/XLSX/CSV</label>
 
-
+                                    <input type="file" class="custom-file-input" id="fileInput">
+                                    <button type="button" id="uploadFile" class="form-control">Upload</button>
+                                </div>
 
                             </div>
-
-
                         </div>
 
 
@@ -96,6 +87,7 @@
 
 
 <script>
+    let xlsData;
     var selectedFile;
     document.getElementById("fileInput")
         .addEventListener("change", function(event) {
@@ -113,19 +105,42 @@
                         type: "binary"
                     });
                     workbook.SheetNames.forEach(sheet => {
-                        let rowobject = XLSX.utils.sheet_to_json(
+                        xlsData = XLSX.utils.sheet_to_json(
                             workbook.Sheets[sheet], {
                                 header: 1
                             }
                         );
-                        setTableData(rowobject);
+                        setTableData();
                     });
                 };
                 fileReader.readAsBinaryString(selectedFile);
             }
         });
 
-    function setTableData(data) {
+    function submitData() {
+
+        let _token = $('input[name="_token"]').val();
+        let title = $('#data_title').val();
+        let code = $('#template_code').val();
+
+        $.ajax({
+            url: "/admin/file-upload/store",
+            method: "POST",
+            data: {
+                title: title,
+                data: JSON.stringify(xlsData),
+                code: code,
+                _token: _token
+            },
+            success: function(data) {
+                location.href = '/admin/dashboard'
+
+            }
+        });
+    }
+
+    function setTableData() {
+        let data = xlsData;
         let head = '<tr>';
         for (const col of data[0]) {
             head += `<td>${col}</td>`
@@ -147,43 +162,10 @@
         }
         $('tbody').html(body);
     }
+
     $(document).ready(function() {
 
-        fetch_data();
-
-
-
         var _token = $('input[name="_token"]').val();
-
-        $(document).on('click', '#add', function() {
-            var user_id = $('#user_id').text();
-            var first_name = $('#first_name').text();
-            var last_name = $('#last_name').text();
-            var full_name = $('#full_name').text();
-            var phone = $('#phone').text();
-
-            if (first_name != '' && last_name != '' && user_id != '' && full_name != '' && phone !=
-                '') {
-                $.ajax({
-                    url: "{{ route('livetable.add_data') }}",
-                    method: "GET",
-                    data: {
-                        first_name: first_name,
-                        last_name: last_name,
-                        user_id: user_id,
-                        full_name: full_name,
-                        phone: phone,
-                        _token: _token
-                    },
-                    success: function(data) {
-                        $('#message').html(data);
-                        fetch_data();
-                    }
-                });
-            } else {
-                $('#message').html("<div class='alert alert-danger'>Every Fields are required</div>");
-            }
-        });
 
         $(document).on('blur', '.column_name', function() {
             var column_name = $(this).data("column_name");

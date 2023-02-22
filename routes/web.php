@@ -1,6 +1,7 @@
 <?php
 
 
+use App\Http\Controllers\Admin\FileUpload;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FrontController;
 
@@ -8,6 +9,7 @@ use App\Http\Controllers\FrontController;
 
 use App\Http\Controllers\LiveTableController;
 use App\Http\Controllers\Admin\LoginController;
+
 
 use App\Http\Controllers\Admin\TemplateController;
 use App\Http\Controllers\Admin\DashboardController;
@@ -28,7 +30,7 @@ Route::get('/cache-clear', function () {
 });
 
 Route::get('/download-page',function(){
-    return view('download'); 
+    return view('download');
 });
 
 
@@ -36,7 +38,7 @@ Route::get('/download-page',function(){
 
 Route::get('test',function(){
 
-    return view('admin.generatecode.test'); 
+    return view('admin.generatecode.test');
 });
 
 //----- Admin Routes -----//
@@ -44,6 +46,7 @@ Route::get('test',function(){
 
 
 
+Route::get('file-upload/enter-code', [FileUpload::class, 'enterCode']);
 
 
 Route::group(['prefix' => 'admin'], function(){
@@ -59,7 +62,8 @@ Route::group(['prefix' => 'admin'], function(){
         Route::post('/generatecode',[GenerateCodeController::class, 'store']);
 
 
-        Route::get('/livetable',[LiveTableController::class,'index']);
+        Route::get('/file-upload/table/{code}', [FileUpload::class,'index']);
+        Route::post('/file-upload/store', [FileUpload::class, 'store']);
         Route::get('/livetable/fetch_data',[LiveTableController::class,'fetch_data']);
         Route::GET('/livetable/add_data',[LiveTableController::class,'add_data'])->name('livetable.add_data');
         Route::GET('/livetable/update_data',[LiveTableController::class,'update_data'])->name('livetable.update_data');
@@ -68,5 +72,5 @@ Route::group(['prefix' => 'admin'], function(){
         Route::get('/download',[LiveTableController::class,'download']);
 
     });
-   
+
 });

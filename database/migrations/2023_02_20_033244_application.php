@@ -32,6 +32,7 @@ return new class extends Migration
             $table->id();
             $table->integer('user_id');
             $table->string('title');
+            $table->integer('code_id');
             $table->json('data');
             $table->timestamps();
         });
