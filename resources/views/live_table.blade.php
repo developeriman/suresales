@@ -101,8 +101,6 @@
 
         let body = '';
         for (let count = 1; count < data.length; count++) {
-
-
             body += '<tr>';
             for(const col of data[count]) {
                 body += `<td contenteditable class="column_name" data-column_name="user_id" data-id="row-${count}">${col}</td>`;
