@@ -64,8 +64,10 @@
                                 </div>
 
                                 <div class="custom-file" style="border: 2px solid red;width:30%;height:15%;padding:4px;border-radius: 2px;">
-                                    <label class="custom-file-label" for="inputGroupFile01"
-                                           style="color:red">UPLOAD/XLSX/CSV</label>
+                                    <label
+                                        class="custom-file-label"
+                                        for="inputGroupFile01"
+                                        style="color:red">UPLOAD/XLSX/CSV</label>
 
                                     <input type="file" class="custom-file-input" id="fileInput">
                                     <button type="button" id="uploadFile" class="form-control">Upload</button>
@@ -124,6 +126,7 @@
             '<td><button type="button" class="btn btn-danger btn-xs delete" id="abc">Delete</button></td>';
         body += '</tr>';
         $('tbody').append(body);
+        xlsData.push(['', '', ''])
     }
 
     function submitData() {
@@ -169,9 +172,9 @@
 
     function addNewRow(data, numRow) {
         let row = '';
-        for (const col of data) {
+        for (const [index, col] of data.entries()) {
             row +=
-                `<td contenteditable class="column_name" data-column_name="user_id" data-id="row-${numRow}">${col}</td>`;
+                `<td contenteditable class="editable-col" data-col="${index}" data-row="${numRow}">${col}</td>`;
         }
         return row;
     }
@@ -180,28 +183,11 @@
 
         var _token = $('input[name="_token"]').val();
 
-        $(document).on('blur', '.column_name', function() {
-            var column_name = $(this).data("column_name");
-            var column_value = $(this).text();
-            var id = $(this).data("id");
-
-            if (column_value != '') {
-                $.ajax({
-                    url: "{{ route('livetable.update_data') }}",
-                    method: "GET",
-                    data: {
-                        column_name: column_name,
-                        column_value: column_value,
-                        id: id,
-                        _token: _token
-                    },
-                    success: function(data) {
-                        $('#message').html(data);
-                    }
-                })
-            } else {
-                $('#message').html("<div class='alert alert-danger'>Enter some value</div>");
-            }
+        $(document).on('input', '.editable-col', function(e) {
+            const content = e.target.textContent;
+            const col = e.target.getAttribute('data-col');
+            const row = e.target.getAttribute('data-row');
+            xlsData[row][col] = content;
         });
 
         $(document).on('click', '.delete', function() {

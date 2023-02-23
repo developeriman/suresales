@@ -36,11 +36,13 @@ class FileUpload extends Controller
         $code->save();
 
         return UploadFiles::create(
-                ['title' => $data['title'],
+            [
+                'title' => $data['title'],
                 'code_id' => $code->id,
                 'title' => $data['title'],
                 'data' => $data['data'],
-                'user_id' => Auth::id()]
+                'user_id' => Auth::id()
+            ]
         );
     }
 

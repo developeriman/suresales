@@ -44,11 +44,6 @@ Route::get('test',function(){
 //----- Admin Routes -----//
 
 
-
-
-Route::get('file-upload/enter-code', [FileUpload::class, 'enterCode']);
-
-
 Route::group(['prefix' => 'admin'], function(){
     Route::get('/pass',[LoginController::class,'pass']);
     Route::get('/login',[LoginController::class,'adminLoginIndex']);
@@ -62,6 +57,7 @@ Route::group(['prefix' => 'admin'], function(){
         Route::post('/generatecode',[GenerateCodeController::class, 'store']);
 
 
+        Route::get('file-upload/enter-code', [FileUpload::class, 'enterCode']);
         Route::get('/file-upload/table/{code}', [FileUpload::class,'index']);
         Route::post('/file-upload/store', [FileUpload::class, 'store']);
         Route::get('/livetable/fetch_data',[LiveTableController::class,'fetch_data']);

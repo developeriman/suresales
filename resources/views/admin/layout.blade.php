@@ -143,10 +143,10 @@
                     </li>
 
 
-                    
+
                     <li class="nav-item">
                         <a class="nav-link @yield('product_active')" aria-current="page"
-                            href="{{ url('admin/livetable') }} ">
+                            href="{{ url('admin/file-upload/enter-code') }} ">
                             <i class="icon">
                                 <svg width="20" viewBox="0 0 24 24" fill="none"
                                     xmlns="http://www.w3.org/2000/svg">
@@ -163,7 +163,7 @@
                     </li>
 
 
-                    
+
                     <li class="nav-item">
                         <a class="nav-link @yield('product_active')" aria-current="page"
                             href="{{ url('admin/download') }} ">
