@@ -106,6 +106,7 @@
                                 header: 1
                             }
                         );
+                        // xlsData = xlsData.map();
                         setTableData();
                     });
                 };
@@ -150,10 +151,10 @@
 
         let body = '';
         for (let count = 1; count < data.length; count++) {
-            body += '<tr>';
+            body += `<tr id="tr-row-${count}">`;
             body += addNewRow(data[count], count);
             body +=
-                '<td><button type="button" class="btn btn-danger btn-xs delete" id="abc">Delete</button></td>';
+                `<td><button type="button" class="btn btn-danger btn-xs delete" data-row="${count}" id="abc">Delete</button></td>`;
             body += '</tr>';
         }
         $('tbody').html(body);
@@ -183,20 +184,10 @@
         });
 
         $(document).on('click', '.delete', function() {
-            var id = $(this).attr("id");
+            let row = $(this).attr("data-row");
             if (confirm("Are you sure you want to delete this records?")) {
-                $.ajax({
-                    url: "{{ route('livetable.delete_data') }}",
-                    method: "GET",
-                    data: {
-                        id: id,
-                        _token: _token
-                    },
-                    success: function(data) {
-                        $('#message').html(data);
-                        fetch_data();
-                    }
-                });
+                $(`#tr-row-${row}`).remove();
+                xlsData.splice(row, 1);
             }
         });
 

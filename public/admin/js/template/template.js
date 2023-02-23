@@ -7,21 +7,24 @@ $(document).ready(function() {
 
         let _token = $('input[name="_token"]').val();
 
-        $.post('./generatecode', {'template_id': template_id, 'prefix': prefix, 'num_of_digit': num_of_digit, '_token': _token}, function (data) {
+        $.post('./generatecode', {
+            'template_id': template_id,
+            'prefix': prefix,
+            'num_of_digit': num_of_digit,
+            '_token': _token
+        }, function (data) {
 
-           console.log('data.....'+ data)
-
-
+           location.reload();
         });
 
     });
 
     $('#savetemplate').click(function() {
-        var _token = $('input[name="_token"]').val();
+        let _token = $('input[name="_token"]').val();
+        let title = $('#data_title').val();
         const data = bindTemplate();
-        $.post('./templatesave', {data,'_token':_token, name: 'Template 1'}, function (data) {
-            console.log('data.....'+ data);
-            clearTemplate();
+        $.post('./templatesave', {data,'_token':_token, name: title}, function (data) {
+            location.reload();
         });
     });
 

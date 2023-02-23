@@ -91,7 +91,7 @@
                     @for ($i = 0; $i < count($codes); $i++)
                         <tr>
                             <td>{{ $codes[$i]['code']  }}</td>
-                            <td>{{ $codes[$i]['template_id']  }}</td>
+                            <td>{{ $codes[$i]->template->name }}</td>
                             <td>{{ $codes[$i]['status']  }}</td>
                         </tr>
                     @endfor

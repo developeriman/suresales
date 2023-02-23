@@ -10,7 +10,8 @@ use App\Models\Templates;
 class TemplateController extends Controller
 {
     public function index(){
-        return view('/admin/template/newtemplate');
+        $templates = Templates::all();
+        return view('/admin/template/newtemplate', ['templates' => $templates]);
     }
 
     function store(Request $request)

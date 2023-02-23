@@ -81,10 +81,36 @@
             </div>
         </div>
 
-        <div class="row justify-content-center" style="margin-top: 20px">
+        <div class="row mb-3 justify-content-center" style="margin-top: 20px">
             <div class="col-md-6">
                 <button type="submit" id="savetemplate" class="btn btn-primary w-100" style="font-size: 12px">Save
                     Template</button>
+            </div>
+        </div>
+
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <table id="customers">
+                    <tr>
+                        <td style="width: 96px;text-align:center;font-weight:bold" colspan="3">Available Template</td>
+
+                    </tr>
+                    <tr>
+                        <td style="width: 96px;">Template ID</td>
+                        <td style="width: 96px;">Template Name</td>
+                    </tr>
+
+                    <tbody>
+
+                    @for ($i = 0; $i < count($templates); $i++)
+                        <tr>
+                            <td>{{ $templates[$i]['id']  }}</td>
+                            <td>{{ $templates[$i]['name']  }}</td>
+                        </tr>
+                    @endfor
+
+                    </tbody>
+                </table>
             </div>
         </div>
 
