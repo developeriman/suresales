@@ -14,7 +14,16 @@ class FileUpload extends Controller
     public function index(Request $request) {
         $code = $request->route('code');
         $code = Codes::where('code', $code)->first();
-        return view('live_table', ['code' => $request->route('code'), 'schema_json' => $code->template->template, 'schema' => json_decode($code->template->template, true)]);
+        if($code->status == 'Available') {
+            return view('live_table', [
+                'code' => $request->route('code'),
+                'schema_json' => $code->template->template,
+                'schema' => json_decode($code->template->template, true)
+            ]);
+        } else {
+            return "Code is used";
+        }
+
     }
 
     public function enterCode() {
@@ -33,6 +42,10 @@ class FileUpload extends Controller
 
         $code = Codes::where('code', $data['code'])->first();
 
+        if($code->status == 'Used') {
+            return "Code is already used";
+        }
+
         $code->status = 'Used';
         $code->save();
 
@@ -40,7 +53,6 @@ class FileUpload extends Controller
             [
                 'title' => $data['title'],
                 'code_id' => $code->id,
-                'title' => $data['title'],
                 'data' => $data['data'],
                 'user_id' => Auth::id()
             ]

@@ -82,7 +82,7 @@
 
 <script>
     let schema = JSON.parse({!! json_encode($schema_json) !!});
-    console.log(schema)
+
     let xlsData;
     var selectedFile;
     document.getElementById("fileInput")
@@ -106,7 +106,9 @@
                                 header: 1
                             }
                         );
-                        // xlsData = xlsData.map();
+                        xlsData[0] = schema.map(data => data.field);
+
+                        xlsData = xlsData.map(data => data.slice(0, schema.length));
                         setTableData();
                     });
                 };
@@ -116,12 +118,12 @@
 
     function addNewRecord() {
         let body = '<tr>';
-        body += addNewRow(Array(xlsData[0].length).fill(''), xlsData.length);
+        body += addNewRow(Array(schema.length).fill(''), xlsData.length);
         body +=
             '<td><button type="button" class="btn btn-danger btn-xs delete" id="abc">Delete</button></td>';
         body += '</tr>';
         $('tbody').append(body);
-        xlsData.push(['', '', ''])
+        xlsData.push(Array(schema[0].length).fill(''));
     }
 
     function submitData() {
@@ -163,7 +165,7 @@
     function addNewRow(data, numRow) {
         let row = '';
         for (const [index, col] of data.entries()) {
-            if(index == schema.length) {
+            if(index === schema.length) {
                 break;
             }
             row +=
