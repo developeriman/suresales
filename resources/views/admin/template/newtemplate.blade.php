@@ -29,6 +29,18 @@
         }
     </style>
     <h2 style="text-align:center">Add New Template</h2>
+
+<br>
+    <form style="text-align:center">
+        <div style="width:30%; margin: 0 auto;">
+            <div class="col-auto">
+                <input type="text" class="form-control text-center" id="data_title" placeholder="TITLE *">
+            </div>
+
+        </div>
+    </form>
+    <br>
+
     <div class="panel panel-default">
         @csrf
         <input type="hidden" id="_token" name="_token" value="{{ csrf_token() }}">
