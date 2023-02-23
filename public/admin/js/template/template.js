@@ -1,6 +1,4 @@
-var makeContact = [];
-var slno = 1;
-var checkfield = -1;
+let slno = 1;
 $(document).ready(function() {
     $('#generatecode').click(function() {
         let template_id = $('#template_id').val();
@@ -36,6 +34,7 @@ $(document).ready(function() {
                     <select class="form-select" value="text" id="template-input-type-${slno}">
                         <option value="text">Text</option>
                         <option value="number">Number</option>
+                        <option value="read_only">Read Only</option>
                         <option value="image">Image</option>
                     </select>
                 </td>

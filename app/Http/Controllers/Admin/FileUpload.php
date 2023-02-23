@@ -12,8 +12,9 @@ class FileUpload extends Controller
 {
 
     public function index(Request $request) {
-        $request->route('code');
-        return view('live_table', ['code' => $request->route('code')]);
+        $code = $request->route('code');
+        $code = Codes::where('code', $code)->first();
+        return view('live_table', ['code' => $request->route('code'), 'schema_json' => $code->template->template, 'schema' => json_decode($code->template->template, true)]);
     }
 
     public function enterCode() {

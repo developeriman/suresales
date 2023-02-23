@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="{{ asset('admin/css/core/libs.min.css') }} " />
 
     <!-- Aos Animation Css -->
-    <link rel="stylesheet" href="{{ asset('admin/vendor/aos/dist/aos.css') }} " />
+    <link rel="stylesheet" href="{{ asset('admin/vendor/aos/dist/bootstrap.css') }} " />
 
     <!-- Hope Ui Design System Css -->
     <link rel="stylesheet" href="{{ asset('admin/css/hope-ui.min.css?v=1.2.0') }} " />
@@ -254,15 +254,11 @@
                     </div>
                 </div>
             </nav> <!-- Nav Header Component Start -->
-            <div class="iq-navbar-header" style="height: 60px;">
-                <div class="iq-header-img">
 
-                </div>
-            </div> <!-- Nav Header Component End -->
             <!--Nav End-->
         </div>
 
-        <div class="conatiner-fluid content-inner mt-n5 py-0">
+        <div class="conatiner-fluid content-inner py-0">
             @yield('content')
         </div>
 

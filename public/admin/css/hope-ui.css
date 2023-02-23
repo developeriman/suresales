@@ -16547,7 +16547,6 @@ thead, tbody, tfoot, tr, td, th {
 }
 
 .iq-banner:not(.hide) + .content-inner {
-  margin-top: -3rem !important;
   padding-top: 0;
   padding-bottom: 0;
 }
@@ -21423,7 +21422,7 @@ body.offcanvas-active {
 }
 
 /*
- * Background color 
+ * Background color
  */
 .bg-soft-primary {
   color: #344ed1;

@@ -48,6 +48,7 @@
                                     <select class="form-select" id="template-input-type-1">
                                         <option value="text">Text</option>
                                         <option value="number">Number</option>
+                                        <option value="read_only">Read Only</option>
                                         <option value="image">Image</option>
                                     </select>
                                 </td>
