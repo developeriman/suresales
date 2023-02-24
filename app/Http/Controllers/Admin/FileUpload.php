@@ -30,12 +30,6 @@ class FileUpload extends Controller
         return view('admin.enter_code');
     }
 
-    /**
-     * Store the newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         $data = $request->all();

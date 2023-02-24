@@ -98,6 +98,7 @@
                     <tr>
                         <td style="width: 96px;">Template ID</td>
                         <td style="width: 96px;">Template Name</td>
+                        <td style="width: 96px;">Action</td>
                     </tr>
 
                     <tbody>
@@ -106,6 +107,7 @@
                         <tr>
                             <td>{{ $templates[$i]['id']  }}</td>
                             <td>{{ $templates[$i]['name']  }}</td>
+                            <td><a href="/admin/template/edit/{{$templates[$i]['id']}}"> Edit </a></td>
                         </tr>
                     @endfor
 

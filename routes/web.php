@@ -5,6 +5,8 @@ use App\Http\Controllers\Admin\FileUpload;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FrontController;
 
+use App\Http\Controllers\Admin\DownloadController;
+
 
 
 use App\Http\Controllers\LiveTableController;
@@ -43,6 +45,7 @@ Route::get('test',function(){
 
 //----- Admin Routes -----//
 
+Route::get('download-file/{id}', [DownloadController::class, 'downloadFile']);
 
 Route::group(['prefix' => 'admin'], function(){
     Route::get('/pass',[LoginController::class,'pass']);
@@ -60,6 +63,7 @@ Route::group(['prefix' => 'admin'], function(){
         Route::get('file-upload/enter-code', [FileUpload::class, 'enterCode']);
         Route::get('/file-upload/table/{code}', [FileUpload::class,'index']);
         Route::post('/file-upload/store', [FileUpload::class, 'store']);
+        Route::get('upload-file/edit/{id}', [FileUpload::class, 'editFile']);
         Route::get('/livetable/fetch_data',[LiveTableController::class,'fetch_data']);
         Route::GET('/livetable/add_data',[LiveTableController::class,'add_data'])->name('livetable.add_data');
         Route::GET('/livetable/update_data',[LiveTableController::class,'update_data'])->name('livetable.update_data');
