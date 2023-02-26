@@ -1,29 +1,13 @@
 let slno = 1;
 $(document).ready(function() {
-    $('#generatecode').click(function() {
-        let template_id = $('#template_id').val();
-        let prefix = $('#prefix').val();
-        let num_of_digit = $('#num_of_digit').val();
-
-        let _token = $('input[name="_token"]').val();
-
-        $.post('./generatecode', {
-            'template_id': template_id,
-            'prefix': prefix,
-            'num_of_digit': num_of_digit,
-            '_token': _token
-        }, function (data) {
-
-           location.reload();
-        });
-
-    });
+    slno = $('#appendrow tr').length;
 
     $('#savetemplate').click(function() {
         let _token = $('input[name="_token"]').val();
         let title = $('#data_title').val();
         const data = bindTemplate();
-        $.post('./templatesave', {data,'_token':_token, name: title}, function (data) {
+
+        $.post('/admin/template/update/' + $('#template_data').val(), {data,'_token':_token, name: title}, function (data) {
             location.reload();
         });
     });
@@ -64,10 +48,7 @@ function clearTemplate() {
 
 function bindTemplate()
 {
-    const template = [{
-        field: 'userid',
-        type: 'text'
-    }];
+    const template = [];
     for(let i = 1; i <= slno; i++) {
         let field = $(`#template-input-${i}`).val();
         let type = $(`#template-input-type-${i}`).val();
@@ -77,7 +58,5 @@ function bindTemplate()
             type
         })
     }
-
     return template;
-
 }
